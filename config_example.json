@@ -1,0 +1,25 @@
+{
+    "port": 8000,
+
+    "imap": {
+        "user": "xxxxxxxxxx",
+        "password": "xxxxxxxxxx",
+        "host": "xxxxxxxxxx",
+        "port": 143,
+        "tls": false,
+        "box": "INBOX",
+        "markSeen": true,
+        "tlsOptions": {
+            "rejectUnauthorized": false
+        },
+        "sender" : "Sender"
+    },
+
+    "shellOptions": {
+        "mode": "json",
+        "pythonPath": "path/to/python",
+        "pythonOptions": "['-u']",
+        "scriptPath": "./",
+        "args": []
+    }
+}

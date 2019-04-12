@@ -1,0 +1,19 @@
+{
+  "name": "tickettracker",
+  "version": "1.0.0",
+  "description": "Pequeno sistema de extração de e-mails de tickets para criação de relatórios e gráficos",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Lucas Baum; Luciano Latocheski",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "mail-notifier": "^0.5.0",
+    "python-shell": "^1.0.7",
+    "socket.io": "^2.2.0"
+  }
+}
