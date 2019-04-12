@@ -12,7 +12,7 @@ async function mailListen(io) {
             processMail(mail)
         })
         .on('connected', () => {
-            console.log("Conectado com sucesso! Monitorando 👮")
+            console.log("Conectado com sucesso! Monitorando..")
         })
         .on('error', (e) => {
             console.log("Erro no serviço de e-mail" + e)
@@ -20,17 +20,15 @@ async function mailListen(io) {
         .start()
 
     function processMail(mail) {
-        console.log("Processando e-mail")
-        if {mail.from[0].name === configs.imap.sender) {
-            console.log("Enviando para python")
+        console.log("Processando e-mail..")
+        console.log(mail.from[0].name)
+        console.log(configs.imap.senderJS)
+        if (mail.from[0].name === configs.imap.senderJS) {
+            console.log("E-mail válido! Enviando para o banco de dados.")
             delete mail['html']
-            PythonShell.run('test.py', { //arquivo com script para processar as informações do email recebido
-                args: JSON.stringify(mail)
+            PythonShell.run('run.py', {
             }, function (err, results) {
                 if (err) return console.log("Erro no processamento PYTHON: " + err);
-                console.log('Results: %j', results);
-                console.log("Enviando para monitores")
-                io.sockets.emit('mensagem', results) //retorno do python para results
             });
 
         } else {

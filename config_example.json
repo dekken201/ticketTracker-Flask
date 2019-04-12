@@ -12,7 +12,8 @@
         "tlsOptions": {
             "rejectUnauthorized": false
         },
-        "sender" : "Sender"
+        "senderJS" : "Sender1",
+        "senderMailModule" : "Sender2"
     },
 
     "shellOptions": {
