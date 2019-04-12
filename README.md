@@ -5,6 +5,7 @@ needed libs:
 imaplib
 mailparser
 beautifulsoup4
+pymongo
 
 instalar npm
 node server.js (dentro da raiz)
