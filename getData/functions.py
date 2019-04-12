@@ -120,8 +120,9 @@ def makeObject(data):
 				if (i == j):
 					print("Adicionando item ao banco "+i)
 					db[i] = {"body":body[j], "subject":subject[i]}
+					print(i)
 	except Exception as e:
 		print("Erro no item : "+str(e)+". Continuando...")
 
 def startDB():
-	return SqliteDict('../db/mails_db.db', autocommit=True)
+	return SqliteDict('../db/mails_db.db',"mails", autocommit=True)
