@@ -21,7 +21,7 @@ async function mailListen(io) {
 
     function processMail(mail) {
         console.log("Processando e-mail")
-        if (2+2 == 4){//mail.from[0].name === configs.imap.sender) {
+        if {mail.from[0].name === configs.imap.sender) {
             console.log("Enviando para python")
             delete mail['html']
             PythonShell.run('test.py', { //arquivo com script para processar as informações do email recebido

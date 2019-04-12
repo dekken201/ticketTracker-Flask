@@ -1,20 +1,21 @@
 import imaplib
 import mailparser
-import json
+from pymongo import MongoClient
+client = MongoClient()
 from datetime import datetime
-import os
 
 now = datetime.now()
+
 def start(IMAP_SERVER, EMAIL_ACCOUNT, PASSWORD, EMAIL_FOLDER,SENDER):
     M = imaplib.IMAP4_SSL(IMAP_SERVER)
     M.login(EMAIL_ACCOUNT, PASSWORD)
     rv, data = M.select(EMAIL_FOLDER)
     if rv == 'OK':
         print ("Processing mailbox: ", EMAIL_FOLDER)
-        process_mailbox(M,SENDER)
-        M.close()
+        return process_mailbox(M,SENDER)
     else:
         print ("ERROR: Unable to open mailbox ", rv)
+    M.close()
     M.logout()
 
 def process_mailbox(M,sender):
@@ -33,24 +34,9 @@ def process_mailbox(M,sender):
         mail = mailparser.parse_from_bytes(data[0][1])
         print ("Writing message ", num)
         mails_dict.update(convert_mail_to_dict(mail))
-
-    while True:
-        filePath = os.path.abspath(__file__)
-        for i in range(2):
-            filePath = os.path.dirname(filePath)
-
-
-        date = now.strftime("%Y%m%d")
-        retorno = dump_json(filePath+"/output/entradaJson_"+date+".txt",mails_dict)    
-        if retorno == "ok":
-            print("Mensagens salvas com sucesso")
-            break
-        else:
-            print(retorno)
-            break
+    return mails_dict
 
 def convert_mail_to_dict(mail_object):
-    mail_dict = {}
     message_id = mail_object.message_id.split('@')
     date = mail_object.date
     date = date.strftime('%H:%M-%d/%m/%Y')
@@ -68,16 +54,3 @@ def convert_mail_to_dict(mail_object):
     'to_domains':mail_object.to_domains,
     'timezone':mail_object.timezone}}
     return mail_dict
-
-def dump_json(filename,mails_dict):
-    try:
-        with open(filename, 'w') as outfile:
-            json.dump(mails_dict, outfile)
-        return "ok"
-    except Exception as e:
-        return "Error: "+str(e)
-
-def processSingleMail(mail):
-    pMail = mailparser.parse_from_bytes(mail)
-    print("esse foi em")
-    return convert_mail_to_dict(pMail)

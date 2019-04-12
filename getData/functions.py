@@ -1,25 +1,12 @@
-import json
+from sqlitedict import SqliteDict
 from bs4 import BeautifulSoup
 import re
 import os
-from .config import *
+from getData.config import *
 from datetime import datetime
 
 now = datetime.now()
 date = now.strftime("%Y%m%d")
-
-def open_json():
-    filePath = os.path.abspath(__file__)
-    i = 0
-    for i in range(2):
-        filePath = os.path.dirname(filePath)
-        i += 1
-    try:
-        with open(filePath+"/output/entradaJson_"+date+".txt") as json_file:
-            data = json.load(json_file)
-            return data
-    except Exception as e:
-        return "Erro ao carregar o JSON: "+str(e)
 
 #####get subject####
 def getSubject(data):
@@ -120,34 +107,21 @@ def getBody(data):
 		except Exception as e:
 			print("Erro em getHistoricoItem: "+str(e))
 			pass
-
 	return items
 
 def makeObject(data):
-	finalJson = {}
+	print(data)
+	db = startDB()
 	subject = getSubject(data)
 	body = getBody(data)
 	try:
 		for i in subject:
 			for j in body:
 				if (i == j):
-					print("Criando JSON do item "+i)
-					finalJson[i] = {"body":body[j], "subject":subject[i]}
+					print("Adicionando item ao banco "+i)
+					db[i] = {"body":body[j], "subject":subject[i]}
 	except Exception as e:
 		print("Erro no item : "+str(e)+". Continuando...")
 
-	dumpJson(finalJson)
-
-def dumpJson(data):
-    try:
-        filePath = os.path.abspath(__file__)
-        i = 0
-        for i in range(2):
-            filePath = os.path.dirname(filePath)
-            i += 1
-        with open(filePath+"/output/JsonDump_"+date+".txt", "w+") as json_file:
-            json.dump(data, json_file)
-    except Exception as e:
-        print("Erro ao salvar o JSON: "+str(e))
-
-
+def startDB():
+	return SqliteDict('../db/mails_db.db', autocommit=True)

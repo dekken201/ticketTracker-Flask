@@ -5,6 +5,8 @@ needed libs:
 imaplib
 mailparser
 beautifulsoup4
+sqlite3
+sqlitedict
 
 instalar npm
 node server.js (dentro da raiz)
