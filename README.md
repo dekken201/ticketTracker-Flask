@@ -1,7 +1,3 @@
-NÃO LIBERAR PARA O PUBLICOOOOOO
-COMMIT COM SENHA PORRA
-
-
 # ticketTracker
 Pequeno sistema de extração de e-mails de tickets para criação de relatórios e gráficos
 
@@ -21,5 +17,5 @@ melhorar jsons
 
 MUDAR O RETORNO DO RUNAUTOMATION - NÃO CRIAR O ARQUIVO DE 20MB COM TODOS OS EMAILS, FICA MUITO PESADO
 
-COLOCAR UM VERIFICADOR DE STATUS DOs servidores
+COLOCAR UM VERIFICADOR DE STATUS DOS SERVIDORES
 
