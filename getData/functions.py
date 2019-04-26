@@ -1,7 +1,6 @@
 from sqlitedict import SqliteDict
 from bs4 import BeautifulSoup
 import re
-import os
 from getData.config import *
 from datetime import datetime
 
@@ -27,8 +26,8 @@ def getSubject(data):
 			(situacaoChamado == None),
 			(pendenciaChamado == None)
 			]):
-			print("Erro encontrado nos métodos de extração. Fechando o programa.")
-			break
+			print("Erro encontrado na extração. E-mail número "+item)
+			pass
 		items[item] = {"numChamado":numChamado, 'situacaoChamado':situacaoChamado,
 		'pendenciaChamado':pendenciaChamado}
 	return items
@@ -110,7 +109,6 @@ def getBody(data):
 	return items
 
 def makeObject(data):
-	print(data)
 	db = startDB()
 	subject = getSubject(data)
 	body = getBody(data)
@@ -120,9 +118,9 @@ def makeObject(data):
 				if (i == j):
 					print("Adicionando item ao banco "+i)
 					db[i] = {"body":body[j], "subject":subject[i]}
-					print(i)
+					print(i+" ok")
 	except Exception as e:
 		print("Erro no item : "+str(e)+". Continuando...")
 
 def startDB():
-	return SqliteDict('../db/mails_db.db',"mails", autocommit=True)
+	return SqliteDict('db/mails_db.db',"mails", autocommit=True)

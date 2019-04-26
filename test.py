@@ -1,21 +1,13 @@
-import sys
-import os
+from sqlitedict import SqliteDict
+def testeSelectSQLDICT():
+    mails = SqliteDict('db/mails_db.db', "mails", autocommit=True)
+    for key,value in sorted(mails.iteritems(),reverse=True):
+        print(key,value)
 
-import getEmails.functions as getEmails
-argv1 = (sys.argv[1])
+def testeFindSQL():
+    mails = SqliteDict('db/mails_db.db', "mails", autocommit=True)
+    if "20190426113618.6CC61AC073A" in mails:
+        print("aqui!")
 
-print(argv1)
-print(type(argv1))
-
-filePath = os.path.abspath(__file__)
-for i in range(2):
-    filePath = os.path.dirname(filePath)
-
-
-retorno = getEmails.dump_json("teste", argv1)
-if retorno == "ok":
-    print("Mensagens salvas com sucesso")
-else:
-    print(retorno)
-
-
+print(testeFindSQL())
+#print(testeSelectSQLDICT())

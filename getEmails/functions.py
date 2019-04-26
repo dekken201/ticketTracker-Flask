@@ -1,8 +1,8 @@
 import imaplib
 import mailparser
-from pymongo import MongoClient
-client = MongoClient()
 from datetime import datetime
+from sqlitedict import SqliteDict
+
 
 now = datetime.now()
 
@@ -32,8 +32,12 @@ def process_mailbox(M,sender):
             return        
 
         mail = mailparser.parse_from_bytes(data[0][1])
-        print ("Writing message ", num)
-        mails_dict.update(convert_mail_to_dict(mail))
+        mail_id = mail.message_id.split('@')[0][1:]
+        if mail_id in get_db():
+            pass
+        else:
+            print ("Writing message ", mail_id)
+            mails_dict.update(convert_mail_to_dict(mail))
     return mails_dict
 
 def convert_mail_to_dict(mail_object):
@@ -54,3 +58,6 @@ def convert_mail_to_dict(mail_object):
     'to_domains':mail_object.to_domains,
     'timezone':mail_object.timezone}}
     return mail_dict
+
+def get_db():
+    return SqliteDict('db/mails_db.db', "mails", autocommit=True)
